@@ -1,0 +1,84 @@
+<div class="header">
+	<ul class="nav nav-pills pull-right">
+		<li class="active"><a href="/">Sök</a></li>
+		<li><a href="#/about">Om</a></li>
+	</ul>
+	<h3 class="text-muted">Gulles GC-Tools</h3>
+</div>
+
+<div ng-show="step1">
+	<div class="jumbotron">
+		<form ng-submit="find()">
+			<input type="search" ng-model="query" placeholder="Sökord"/>
+			<br/>
+			<br/>
+			<p>Du kan ange koordinater i WGS 84 eller longitud/latitud för att hitta cacher i närheten av de angivna koordinaterna. Annars kan du bara ange de inledande bokstäverna på cachenamnet för att söka bland <strong>alla</strong> cacher.</p>
+			<img src="loader.gif" alt="Loading" ng-show="locating"/>
+			<br/>
+			<button type="button" ng-hide="locating" class="btn btn-default btn-lg" ng-click="myPosition()">
+				<span class="glyphicon glyphicon-globe"></span> <small>Min position</small>
+			</button>
+		</form>
+	</div>
+
+	<!--<div class="row marketing">
+		<h3>Exempel</h3>
+		<p><strong>Söka i närheten:</strong> 62,123123123 17,12312313 <em>eller</em> N62 22.123 E017 20.442</p>
+		<p><strong>Söka efter namn:</strong> Ice Climber</p>
+	</div>-->
+</div>
+
+<div ng-show="step2">
+	<div class="jumbotron">
+		<h3>Letar efter {{query}}...</h3>
+		<img src="loader.gif" alt="Loading"/>
+	</div>
+</div>
+
+<div ng-show="step3">
+	<h2>{{results.length}} träffar</h2>
+	<button type="button" class="btn btn-default navbar-btn" ng-click="reset()">
+		<span class="glyphicon glyphicon-search"></span>Ny sökning
+	</button>
+	<!--<ul class="list-unstyled">
+		<li ng-repeat="c in results">
+			<p>{{c.name}} FP: {{c.favs}} URL: {{c.url}}</p>
+		</li>
+	</ul>-->
+
+<!--
+{ "name": name, "favs": favs, "url": url,
+	"size": size, "size_img": "http://www.geocaching.com" + size_img,
+	"dt": dt, "placed": placed, "last_found": last_found,
+	"nickname": nickname, "code": code, "location": location }
+-->
+
+	<table ng-table="tableParams" show-filter="true" class="table ng-table-responsive table-striped">
+		<tr ng-repeat="cache in results">
+			<td data-title="'Namn'" sortable="'name'" filter="{ 'name': 'text' }">
+				<a href="{{cache.url}}">{{cache.name}}</a>
+			</td>
+			<td data-title="'Kod'">
+				{{cache.code}}
+			</td>
+			<td data-title="'FP'" sortable="'favs'">
+				{{cache.favs}}
+			</td>
+			<td data-title="'D/T'" sortable="'dt'">
+				{{cache.dt[0]}}/{{cache.dt[1]}}
+			</td>
+			<td data-title="'Storlek'">
+				{{cache.size}}
+			</td>
+			<td data-title="'Gömd'">
+				{{cache.placed}}
+			</td>
+			<!--<td data-title="'CO'">
+				{{cache.nickname}}
+			</td>-->
+			<td data-title="'Plats'" sortable="'location'">
+				{{cache.location}}
+			</td>
+		</tr>
+	</table>
+</div>
