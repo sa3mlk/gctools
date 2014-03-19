@@ -11,8 +11,7 @@ angular.module('frontendApp')
 	$scope.locating = false;
 
 	$scope.find = function() {
-		//var url = 'http://127.0.0.0:52052/gcfind/' + $scope.query;
-		var url = 'http://10.0.3.202:52052/gcfind/' + $scope.query;
+		var url = 'http://gulle.se:52052/gcfind/' + $scope.query;
 		console.log('URL:' + url);
 		$scope.step1 = false;
 		$scope.step2 = true;
